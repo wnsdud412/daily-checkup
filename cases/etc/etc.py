@@ -1,0 +1,28 @@
+from .. import *
+from . import *
+
+def test():
+    result = {}
+
+    driver = webdriver.Edge()
+    url = 'https://kworks.krx.co.kr/main.act'
+    driver.get(url)
+
+    wait = WebDriverWait(driver, 60)
+
+    selenium_util.write(driver,By.NAME,'userid','smart')
+    driver.find_element(By.NAME,"password").send_keys('gksrnrrjfoth1!')
+    driver.find_element(By.XPATH,'//*[@id="kLogin_wrap"]/form/div/div[2]/div[2]/div[4]/button').click()
+
+    messenger(driver)
+
+    result['보고'] = bogo(driver,wait)
+    result['플래너'] = plan(driver,wait)
+    result['게시판'] = board(driver,wait)
+    result['차량|회의실'] = reserve(driver)
+    result['통합검색'] = search(driver,wait)
+    result['메신저'] = messenger_check()
+    
+    driver.quit()
+
+    return result
