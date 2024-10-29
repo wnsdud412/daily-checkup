@@ -1,0 +1,17 @@
+status: 'checkup'
+user: 
+  name: '이준영'
+  id: 'smart4'
+  pw: 'wedsmart4'
+checker:
+  id: 'smart'
+  pw: 'gksrnrrjfoth1@'
+pm:
+  name: '양상철'
+  id: '230284'
+  pw: 'gksrnrrjfoth1!'
+coworker: '나홍주'
+reporter: 
+  id: 'smartpm01'
+  pw: 'gksrnrrjfoth1!'
+  phone: "02-3774-4336"

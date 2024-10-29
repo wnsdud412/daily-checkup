@@ -4,7 +4,12 @@ from .. import *
 def reject(driver,wait):
     
     for tt in ["내부결재","작업보고서"] :
-        selenium_util.change_frame(driver,By.ID,'mainFrame')
+        driver.switch_to.default_content()
+
+        try:
+            selenium_util.change_frame(driver,By.ID,'mainFrame')
+        except:
+            print("main frame 없는 화면")
         selenium_util.change_frame(driver,By.XPATH,'/html/frameset/frame[2]')
 
         draftList = driver.find_elements(By.NAME,'DocList_TR')
@@ -12,11 +17,11 @@ def reject(driver,wait):
 
         for draft in draftList :
             if testText == draft.find_element(By.XPATH,'./td[1]').text :
+
+                selenium_util.click(driver,By.ID,draft.get_attribute("id"))
                 ActionChains(driver).double_click(draft).perform()
 
-                currentHandle = driver.current_window_handle
-
-                driver.switch_to.window(driver.window_handles[-1])
+                currentHandle = selenium_util.switch_new_window(driver)
 
                 selenium_util.change_frame(driver,By.ID,'iFrameLayer')
                 selenium_util.click(driver,By.ID,'Submit1')

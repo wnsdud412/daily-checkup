@@ -5,7 +5,7 @@ def test():
         config = yaml.full_load(f)
 
     try: 
-        driver = webdriver.Edge()
+        driver = selenium_util.getDriver()
         url = 'https://kmailin.krx.co.kr/'
         driver.get(url)
 
@@ -17,8 +17,8 @@ def test():
             )
         )
 
-        driver.find_element(By.ID,"member_id").send_keys('smart')
-        driver.find_element(By.ID,"member_pw").send_keys('gksrnrrjfoth1!')
+        driver.find_element(By.ID,"member_id").send_keys(config['checker']['id'])
+        driver.find_element(By.ID,"member_pw").send_keys(config['checker']['pw'])
         driver.find_element(By.XPATH,'//*[@id="wrap"]/form/div/div[2]/div[2]/div[4]/input').click()
 
         selenium_util.click(driver,By.XPATH,'//*[@id="snb_mail"]/div/div[1]/a[1]')
@@ -29,11 +29,11 @@ def test():
             )
         )
         
-        driver.find_element(By.XPATH,'//*[@id="toDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys('양상철')
+        driver.find_element(By.XPATH,'//*[@id="toDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys(config['pm']['name'])
         time.sleep(1)
         driver.find_element(By.XPATH,'//*[@id="toDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys(Keys.TAB)
         time.sleep(1)
-        driver.find_element(By.XPATH,'//*[@id="ccDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys(config['username'])
+        driver.find_element(By.XPATH,'//*[@id="ccDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys(config['user']['name'])
         time.sleep(1)
         driver.find_element(By.XPATH,'//*[@id="ccDiv"]/ul').find_element(By.TAG_NAME,'textarea').send_keys(Keys.TAB)
         time.sleep(1)
@@ -65,7 +65,7 @@ def test():
         time.sleep(1)
         driver.close()
 
-        driver = webdriver.Edge()
+        driver = selenium_util.getDriver()
         url = 'https://kmailin.krx.co.kr/'
         driver.get(url)
 
@@ -76,8 +76,8 @@ def test():
                 (By.ID,"member_id")
             )
         )
-        driver.find_element(By.ID,"member_id").send_keys(config['userid'])
-        driver.find_element(By.ID,"member_pw").send_keys(config['userpw'])
+        driver.find_element(By.ID,"member_id").send_keys(config['user']['id'])
+        driver.find_element(By.ID,"member_pw").send_keys(config['user']['pw'])
         driver.find_element(By.XPATH,'//*[@id="wrap"]/form/div/div[2]/div[2]/div[4]/input').click()
 
         wait.until(

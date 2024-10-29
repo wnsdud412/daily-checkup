@@ -1,8 +1,11 @@
 from .. import *
 
 def test():
+    with open('./config.yml','r',encoding='UTF8') as f:
+        config = yaml.full_load(f)
+
     try:
-        driver = webdriver.Edge()
+        driver = selenium_util.getDriver()
         url = 'https://kworks.krx.co.kr/main.act'
         driver.get(url)
 
@@ -14,14 +17,14 @@ def test():
             )
         )
 
-        driver.find_element(By.NAME,"userid").send_keys('smart')
-        driver.find_element(By.NAME,"password").send_keys('gksrnrrjfoth1!')
+        driver.find_element(By.NAME,"userid").send_keys(config['checker']['id'])
+        driver.find_element(By.NAME,"password").send_keys(config['checker']['pw'])
         driver.find_element(By.XPATH,'//*[@id="kLogin_wrap"]/form/div/div[2]/div[2]/div[4]/button').click()
 
         selenium_util.click(driver,By.ID,'projectButton')
 
-        driver.switch_to.window(driver.window_handles[-1])
-
+        selenium_util.switch_new_window(driver)
+        
         selenium_util.click(driver,By.ID,'project-200526')
 
         selenium_util.click(driver,By.XPATH,'//*[@id="createPostUl"]/li[1]')

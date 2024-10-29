@@ -1,18 +1,19 @@
 from .. import *
-
-def resource_path():
-    try:
-        base_path=sys._MEIPASS
-    except Exception:
-        base_path=os.path.abspath(".")
-    return base_path
             
 def test():
-    pwd=resource_path()
     try:
+        pwd=system_util.resource_path()
+
+        moniters = win32api.EnumDisplayMonitors()
+        originPoint = [0,0]
+        for monitor in moniters:
+            rect = monitor[2]
+            for i in [0,1] :
+                if rect[i] < originPoint[i] :
+                    originPoint[i] = rect[i]
+
         path = r"K:\공유받은 폴더\외주인력폴더\일일점검"
         item = f"일일점검_{datetime.today().strftime('%Y%m%d')}.docx"
-        print(path+"\\"+item)
         word = win32client.gencache.EnsureDispatch("Word.application")
         word.Visible = True
         doc = word.Documents.Add()
@@ -30,8 +31,8 @@ def test():
 
         time.sleep(3)
 
-        rightClickThirdPoint = pyautogui.center(pyautogui.locateOnScreen(pwd+'/cases/kdrive/내부URL복사.png'))
-        pyautogui.moveTo(rightClickThirdPoint.x,rightClickThirdPoint.y,0.3)
+        urlCopyPoint = pyautogui.center(pyautogui.locateOnScreen(pwd+'/cases/kdrive/내부URL복사.png'))
+        pyautogui.moveTo(urlCopyPoint.x+originPoint[0],urlCopyPoint.y+originPoint[1],0.3)
 
         time.sleep(0.5)
         
@@ -40,7 +41,7 @@ def test():
         time.sleep(1)
 
         clickPoint = pyautogui.center(pyautogui.locateOnScreen(pwd+'/cases/kdrive/복사url확인.PNG'))
-        pyautogui.moveTo(clickPoint.x,clickPoint.y,0.3)
+        pyautogui.moveTo(clickPoint.x+originPoint[0],clickPoint.y+originPoint[1],0.3)
 
         time.sleep(0.5)
 

@@ -3,21 +3,23 @@ from . import attachFile
 from . import setDraftInfo
 
 def draft(driver,wait):
+    pwd=system_util.resource_path()
+
     selenium_util.change_frame(driver,By.ID,'mainFrame')
     selenium_util.change_frame(driver,By.XPATH,'/html/frameset/frame[1]')
     selenium_util.click(driver,By.XPATH,'//*[@id="left"]/div[2]/p[1]')
 
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
     selenium_util.click(driver,By.XPATH,'/html/body/div[3]/a[1]')
 
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
     selenium_util.change_frame(driver,By.ID,'message')
 
     time.sleep(3)
 
-    with open(r"cases\approve\inner.js",'r',encoding='UTF8') as inner:
+    with open(pwd+r"\cases\approve\inner.js",'r',encoding='UTF8') as inner:
         driver.execute_script(inner.read())
     
     time.sleep(0.5)
@@ -54,7 +56,7 @@ def draft(driver,wait):
     
     time.sleep(3)
 
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
 
 

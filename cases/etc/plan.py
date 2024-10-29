@@ -5,7 +5,7 @@ def plan(driver,wait):
 
     selenium_util.click(driver,By.ID,'planButton')
     
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
     time.sleep(0.5)
     
@@ -24,6 +24,6 @@ def plan(driver,wait):
         result = True
 
     driver.close()
-    driver.switch_to.window(driver.window_handles[-1])
-
+    selenium_util.switch_new_window(driver)
+    
     return result

@@ -5,7 +5,7 @@ def bogo(driver,wait):
 
     selenium_util.click(driver,By.ID,'bogoButton')
 
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
     selenium_util.change_frame(driver,By.XPATH,'/html/frameset/frameset/frame[2]')
 
@@ -18,6 +18,7 @@ def bogo(driver,wait):
         result = True
 
     driver.close()
-    driver.switch_to.window(driver.window_handles[-1])
+
+    selenium_util.switch_new_window(driver)
 
     return result

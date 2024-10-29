@@ -5,7 +5,7 @@ def search(driver,wait):
 
     options=webdriver.EdgeOptions()
     options.add_argument("--headless")
-    headless = webdriver.Edge(options=options)
+    headless = selenium_util.getDriver(options)
 
     for i in range(1,4):
         headless.get(f"http://10.10.34.15{i}:6203")
@@ -24,7 +24,7 @@ def search(driver,wait):
     searchBar.send_keys("노동조합")
     searchBar.send_keys(Keys.ENTER)
 
-    driver.switch_to.window(driver.window_handles[-1])
+    selenium_util.switch_new_window(driver)
 
     wait.until(
         EC.presence_of_element_located(

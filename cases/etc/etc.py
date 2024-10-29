@@ -2,16 +2,19 @@ from .. import *
 from . import *
 
 def test():
-    result = {}
+    with open('./config.yml','r',encoding='UTF8') as f:
+        config = yaml.full_load(f)
 
-    driver = webdriver.Edge()
+    result = {}
+    
+    driver = selenium_util.getDriver()
     url = 'https://kworks.krx.co.kr/main.act'
     driver.get(url)
 
     wait = WebDriverWait(driver, 60)
 
-    selenium_util.write(driver,By.NAME,'userid','smart')
-    driver.find_element(By.NAME,"password").send_keys('gksrnrrjfoth1!')
+    selenium_util.write(driver,By.NAME,'userid',config['checker']['id'])
+    driver.find_element(By.NAME,"password").send_keys(config['checker']['pw'])
     driver.find_element(By.XPATH,'//*[@id="kLogin_wrap"]/form/div/div[2]/div[2]/div[4]/button').click()
 
     messenger(driver)

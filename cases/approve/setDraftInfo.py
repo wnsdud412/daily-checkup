@@ -3,10 +3,9 @@ from .. import *
 
 def setDocInfo(driver,wait) :
     selenium_util.click(driver,By.ID,'showDocinfo')
-    selenium_util.click(driver,By.XPATH,'//*[@id="Docinfo"]/table[1]/tbody/tr[1]/td/a')
+    selenium_util.click(driver,By.XPATH,'//*[@id="Docinfo"]/table[1]/tbody/tr[1]/td/a/span')
 
-    currentHandle = driver.current_window_handle
-    driver.switch_to.window(driver.window_handles[-1]) 
+    currentHandle = selenium_util.switch_new_window(driver)
 
     wait.until(
         EC.presence_of_element_located(
@@ -30,15 +29,17 @@ def setDocInfo(driver,wait) :
 
 
 def step(driver,wait) :
+    with open('./config.yml','r',encoding='UTF8') as f:
+        config = yaml.full_load(f)
+
     selenium_util.click(driver,By.ID,'btntotaldocinfo')
 
-    currentHandle = driver.current_window_handle
-    driver.switch_to.window(driver.window_handles[-1])
+    currentHandle = selenium_util.switch_new_window(driver)
 
     userList = driver.find_elements(By.NAME,'pUserList_TR')
 
     for user in userList :
-        if '양상철' == user.get_attribute('data4') :
+        if config['pm']['name'] == user.get_attribute('data4') :
             ActionChains(driver).double_click(user).perform()
 
     setDocInfo(driver,wait)
